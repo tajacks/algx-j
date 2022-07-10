@@ -32,8 +32,15 @@ public final class ColumnNode extends Node implements DownLinkable<DancingNode>,
         covered = true;
     }
 
-    public void decrementDancingNodeCount() {
-        nodesWithinColumn--;
+    public void uncover() {
+        for (Node colNode : getNodesInColumn(NodeOrder.REVERSED)) {
+            for (Node colNodeRowNode : getNodesInRowGivenNode(colNode, NodeOrder.REVERSED)) {
+                colNodeRowNode.restoreSelfUpDown();
+                colNodeRowNode.assignedColumn().incrementDancingNodeCount();
+            }
+        }
+        restoreSelfLeftRight();
+        covered = false;
     }
 
     private List<Node> getNodesInColumn(NodeOrder orderBy) {
@@ -58,19 +65,12 @@ public final class ColumnNode extends Node implements DownLinkable<DancingNode>,
         return nodes;
     }
 
-    public void uncover() {
-        for (Node colNode : getNodesInColumn(NodeOrder.REVERSED)) {
-            for (Node colNodeRowNode : getNodesInRowGivenNode(colNode, NodeOrder.REVERSED)) {
-                colNodeRowNode.restoreSelfUpDown();
-                colNodeRowNode.assignedColumn().incrementDancingNodeCount();
-            }
-        }
-        restoreSelfLeftRight();
-        covered = false;
-    }
-
     public void incrementDancingNodeCount() {
         nodesWithinColumn++;
+    }
+
+    public void decrementDancingNodeCount() {
+        nodesWithinColumn--;
     }
 
     public int getNodesWithinColumn() {
