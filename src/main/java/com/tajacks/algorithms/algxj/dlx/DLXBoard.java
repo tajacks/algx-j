@@ -16,14 +16,12 @@ public class DLXBoard {
     private final        ColumnNode       header;
     private final        ExactCoverMatrix matrix;
     private final        List<ColumnNode> columns;
-    private final        List<Node>       currentAnswer;
     private              List<List<Node>> answers;
 
     public DLXBoard(ExactCoverMatrix matrix) {
         this.header        = ColumnNode.fromName(HEADER_LABEL);
         this.matrix        = matrix;
         this.columns       = buildColumnsAndNodes();
-        this.currentAnswer = new ArrayList<>();
     }
 
     private List<ColumnNode> buildColumnsAndNodes() {
@@ -78,23 +76,21 @@ public class DLXBoard {
 
                 for (Node node = co.getDown(); node != co; node = node.getDown()) {
                     // Add Node to partial solution
-                    //currentAnswer.add(node);
                     currentAnswerBucket.add(node);
 
-                    // We cover columns
+                    // Cover columns from Nodes in row
                     for (Node j = node.getRight(); j != node; j = j.getRight()) {
                         j.assignedColumn().cover();
                     }
 
-                    // recursive call to leverl k + 1
+                    // Recursive call to solve
                     solve(currentAnswerBucket);
 
-                    // We go back
-                    // node = currentAnswer.remove(currentAnswer.size() - 1);
+                    // Start to undo actions taken
                     node = currentAnswerBucket.remove(currentAnswerBucket.size() - 1);
                     co   = node.assignedColumn();
 
-                    // We uncover columns
+                    // Uncover previously covered columns
                     for (Node j = node.getLeft(); j != node; j = j.getLeft()) {
                         j.assignedColumn().uncover();
                     }
@@ -111,5 +107,4 @@ public class DLXBoard {
                       .filter(Predicate.not(ColumnNode::isCovered))
                       .min(Comparator.comparingInt(ColumnNode::getNodesWithinColumn));
     }
-
 }

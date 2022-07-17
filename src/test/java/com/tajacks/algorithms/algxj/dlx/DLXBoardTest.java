@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DLXBoardTest {
 
@@ -42,6 +43,20 @@ class DLXBoardTest {
         assertEquals("1", results.get(0).get(0).getName());
         assertEquals("4", results.get(0).get(1).getName());
         assertEquals("5", results.get(1).get(0).getName());
-        System.out.println(results);
+    }
+
+    @Test
+    void createDLXBoard_AndUnsolvable() {
+        ExactCoverMatrix ecm = new ExactCoverMatrix(
+                List.of(new MatrixColumn("Wallet"), new MatrixColumn("Keys"), new MatrixColumn("Phone")),
+                List.of(
+                        new MatrixRow("1", new boolean[]{ true, false, true }),
+                        new MatrixRow("2", new boolean[]{ true, true, false }),
+                        new MatrixRow("3", new boolean[]{ false, false, false })
+                )
+        );
+        DLXBoard         b       = new DLXBoard(ecm);
+        List<List<Node>> results = b.attemptSolve();
+        assertTrue(results.isEmpty());
     }
 }
