@@ -19,7 +19,7 @@ Creating a Matrix:
 To create a solvable DLX Board, pass an `ExactCoverMatrix` to the constructor in `DLXBoard`:
 
 ```java
-DLXBoard         b       = new DLXBoard(ecm);
+DLXBoard b = new DLXBoard(ecm);
 ```
 
 If a solution is found, the answer(s) will be returned as a `List<List<Node>>`, where each `List<Node>` represents a solution. The following:
@@ -43,3 +43,15 @@ If a solution is found, the answer(s) will be returned as a `List<List<Node>>`, 
 Results in:
 
 `[[1, 4], [5]]`
+
+### Acknowledgements
+
+https://github.com/rafalio/dancing-links-java
+
+https://www.baeldung.com/java-sudoku
+
+https://www.stolaf.edu/people/hansonr/sudoku/exactcover.htm
+
+https://gieseanw.wordpress.com/2011/06/16/solving-sudoku-revisited/
+
+https://garethrees.org/2007/06/10/zendoku-generation/#section-4
