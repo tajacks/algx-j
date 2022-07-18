@@ -55,3 +55,5 @@ https://www.stolaf.edu/people/hansonr/sudoku/exactcover.htm
 https://gieseanw.wordpress.com/2011/06/16/solving-sudoku-revisited/
 
 https://garethrees.org/2007/06/10/zendoku-generation/#section-4
+
+https://github.com/thomasjungblut/go-dancing-links
